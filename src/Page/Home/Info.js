@@ -58,7 +58,7 @@ const Info = () => {
                 </div>
             </div> */}
             {
-                information.map(info => <InfoCard key={info.id} info={info}></InfoCard>)
+                information.map(info => <InfoCard key={info._id} info={info}></InfoCard>)
             }
         </div>
     );

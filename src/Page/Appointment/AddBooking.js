@@ -10,25 +10,25 @@ const AddBooking = ({ booking, date, setBooking }) => {
     }
     return (
         <div>
-            <input type="checkbox" id="my-modal-6" class="modal-toggle" />
-            <div class="modal modal-bottom sm:modal-middle">
-                <div class="modal-box">
-                    <label for="my-modal-6" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
-                    <h3 class="font-bold text-lg text-center">{name}</h3>
+            <input type="checkbox" id="my-modal-6" className="modal-toggle" />
+            <div className="modal modal-bottom sm:modal-middle">
+                <div className="modal-box">
+                    <label for="my-modal-6" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+                    <h3 className="font-bold text-lg text-center">{name}</h3>
                     <form onSubmit={handleSubmit} className='grid grid-cols-1 gap-4 justify-items-center my-4'>
-                        <input type="text" disabled value={format(date, 'PP')} class="input input-bordered w-full max-w-xs" />
-                        <select name='slot' class="select select-bordered w-full max-w-xs">
+                        <input type="text" disabled value={format(date, 'PP')} className="input input-bordered w-full max-w-xs" />
+                        <select name='slot' className="select select-bordered w-full max-w-xs">
                             {
-                                slots.map(slot => <option value={slot}>{slot}</option>)
+                                slots?.map(slot => <option value={slot}>{slot}</option>)
                             }
                         </select>
-                        <input type="text" name='name' placeholder="Enter Your Name" class="input input-bordered w-full max-w-xs" />
-                        <input type="email" name='email' placeholder="Enter Your Email" class="input input-bordered w-full max-w-xs" />
-                        <input type="text" placeholder="Enter Your Phone Number" class="input input-bordered w-full max-w-xs" />
-                        <input type="Submit" value="Submit" class="btn btn-secondary text-white w-full max-w-xs" />
+                        <input type="text" name='name' placeholder="Enter Your Name" className="input input-bordered w-full max-w-xs" />
+                        <input type="email" name='email' placeholder="Enter Your Email" className="input input-bordered w-full max-w-xs" />
+                        <input type="text" placeholder="Enter Your Phone Number" className="input input-bordered w-full max-w-xs" />
+                        <input type="Submit" value="Submit" className="btn btn-secondary text-white w-full max-w-xs" />
                     </form>
-                    <div class="modal-action">
-                        <label for="my-modal-6" class="btn">close</label>
+                    <div className="modal-action">
+                        <label for="my-modal-6" className="btn">close</label>
                     </div>
                 </div>
             </div>

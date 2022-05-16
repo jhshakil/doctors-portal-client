@@ -3,9 +3,9 @@ import { useCreateUserWithEmailAndPassword, useSignInWithGoogle } from 'react-fi
 import auth from '../../firebase.init'
 import { useForm } from "react-hook-form";
 import Loading from '../Shared/Loading/Loading';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-const SignUp = () => {
+const SignOut = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
     const [
@@ -16,6 +16,8 @@ const SignUp = () => {
     ] = useCreateUserWithEmailAndPassword(auth);
 
     const navigate = useNavigate();
+    const location = useLocation();
+    let from = location.state?.from?.pathname || "/";
     if (loading || gLoading) {
         return <Loading></Loading>
     }
@@ -24,19 +26,19 @@ const SignUp = () => {
         signInError = <p className='text-red-500'><small>{error.message || gError.message}</small></p>
     }
     if (user || gUser) {
-        console.log(gUser)
+        navigate(from, { replace: true });
     }
 
     const onSubmit = data => {
         console.log(data)
         createUserWithEmailAndPassword(data.email, data.password);
-        navigate('/home')
+
     };
     return (
         <div className='flex justify-center items-center h-screen'>
             <div className="card w-96 bg-base-100 shadow-xl">
                 <div className="card-body">
-                    <h2 className="card-title text-3xl font-bold justify-center">Sign Up</h2>
+                    <h2 className="card-title text-3xl font-bold justify-center">Sign Out</h2>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="form-control w-full max-w-xs">
                             <label className="label">
@@ -119,4 +121,4 @@ const SignUp = () => {
     );
 };
 
-export default SignUp;
+export default SignOut;

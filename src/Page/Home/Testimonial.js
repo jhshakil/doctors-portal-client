@@ -44,7 +44,7 @@ const Testimonial = () => {
             <div className='grid grid-cols-1 lg:grid-cols-3'>
                 {
                     reviews.map(review =>
-                        <div className="card w-96 bg-base-100 shadow-xl">
+                        <div key={review._id} className="card w-96 bg-base-100 shadow-xl">
                             <div className="card-body">
                                 {/* <h2 className="card-title">Shoes!</h2> */}
                                 <p>{review.description}</p>

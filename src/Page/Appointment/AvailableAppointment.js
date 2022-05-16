@@ -1,16 +1,18 @@
 import { format } from 'date-fns';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useQuery } from 'react-query';
 import AddBooking from './AddBooking';
 import Service from './Service';
+import Loading from '../Shared/Loading/Loading';
 
 const AvailableAppointment = ({ date }) => {
     const [booking, setBooking] = useState({})
-    const [services, setServices] = useState([])
-    useEffect(() => {
-        fetch('http://localhost:5000/service')
-            .then(res => res.json())
-            .then(data => setServices(data))
-    }, [])
+    const bookingDate = format(date, 'PP')
+    const { data: services, isLoading, refetch } = useQuery(['available', bookingDate], () => fetch(`http://localhost:5000/available?date=${bookingDate}`)
+        .then(res => res.json()))
+    if (isLoading) {
+        return <Loading></Loading>
+    }
     return (
         <div className='my-8'>
             <div>
@@ -18,10 +20,15 @@ const AvailableAppointment = ({ date }) => {
             </div>
             <div className='grid grid-cols-1 lg:grid-cols-3 gap-4 my-8'>
                 {
-                    services.map(service => <Service key={service._id} service={service} setBooking={setBooking}></Service>)
+                    services?.map(service => <Service key={service._id} service={service} setBooking={setBooking}></Service>)
                 }
             </div>
-            {booking && <AddBooking booking={booking} setBooking={setBooking} date={date}></AddBooking>}
+            {booking && <AddBooking
+                booking={booking}
+                setBooking={setBooking}
+                date={date}
+                refetch={refetch}
+            ></AddBooking>}
         </div>
     );
 };

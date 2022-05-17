@@ -4,8 +4,9 @@ import auth from '../../firebase.init'
 import { useForm } from "react-hook-form";
 import Loading from '../Shared/Loading/Loading';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import useToken from '../../hook/useToken';
 
-const SignOut = () => {
+const SignUp = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
     const [
@@ -14,6 +15,8 @@ const SignOut = () => {
         loading,
         error,
     ] = useCreateUserWithEmailAndPassword(auth);
+
+    const [token] = useToken(user || gUser)
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -25,7 +28,7 @@ const SignOut = () => {
     if (error || gError) {
         signInError = <p className='text-red-500'><small>{error.message || gError.message}</small></p>
     }
-    if (user || gUser) {
+    if (token) {
         navigate(from, { replace: true });
     }
 
@@ -38,7 +41,7 @@ const SignOut = () => {
         <div className='flex justify-center items-center h-screen'>
             <div className="card w-96 bg-base-100 shadow-xl">
                 <div className="card-body">
-                    <h2 className="card-title text-3xl font-bold justify-center">Sign Out</h2>
+                    <h2 className="card-title text-3xl font-bold justify-center">Sign Up</h2>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="form-control w-full max-w-xs">
                             <label className="label">
@@ -110,7 +113,7 @@ const SignOut = () => {
                             </label>
                         </div>
                         {signInError}
-                        <input className='btn w-full max-w-xs' value='Log In' type="submit" />
+                        <input className='btn w-full max-w-xs' value='Sign Up' type="submit" />
                     </form>
                     <p><small>Already have an account? <Link className='text-primary' to='/login'>Please Log In</Link></small></p>
                     <div className="divider">OR</div>
@@ -121,4 +124,4 @@ const SignOut = () => {
     );
 };
 
-export default SignOut;
+export default SignUp;

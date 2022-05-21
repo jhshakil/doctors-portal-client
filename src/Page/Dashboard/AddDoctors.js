@@ -7,7 +7,9 @@ import Loading from '../Shared/Loading/Loading';
 const AddDoctors = () => {
     const { register, formState: { errors }, handleSubmit, reset } = useForm();
     const { data: services, isLoading } = useQuery('services', () => fetch('http://localhost:5000/service').then(res => res.json()))
-
+    if (isLoading) {
+        return <Loading></Loading>
+    }
     const imageStorageKey = 'd4926ea4d5adb9f79094a31d6e141835'
     const onSubmit = data => {
         const image = data.image[0];
@@ -49,9 +51,6 @@ const AddDoctors = () => {
             })
     };
 
-    if (isLoading) {
-        return <Loading></Loading>
-    }
     return (
         <div className=''>
             <h2 className='text-center text-2xl text-green-500 font-bold'>Add Doctors</h2>

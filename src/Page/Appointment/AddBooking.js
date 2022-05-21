@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 const AddBooking = ({ booking, date, setBooking, refetch }) => {
     const [user] = useAuthState(auth);
-    const { _id, name, slots } = booking;
+    const { _id, name, slots, price } = booking;
     const bookingDate = format(date, 'PP')
     const handleSubmit = event => {
         event.preventDefault();
@@ -18,6 +18,7 @@ const AddBooking = ({ booking, date, setBooking, refetch }) => {
             treatment: name,
             date: bookingDate,
             slot,
+            price,
             patient: user.email,
             patientName: user.displayName,
             phone: event.target.phone.value
